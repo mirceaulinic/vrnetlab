@@ -140,6 +140,12 @@ class VMX_vcp(vrnetlab.VM):
         self.wait_write(self.password, 'New password:')
         self.wait_write(self.password, 'Retype new password:')
         self.wait_write("set interfaces fxp0 unit 0 family inet address 10.0.0.15/24")
+        self.wait_write("delete interfaces fxp0 unit 0 family inet dhcp")
+        self.wait_write("delete system processes dhcp-service")
+        self.wait_write("commit")
+        self.wait_write("set system login user cflab class super-user authentication plain-text-password")
+        self.wait_write('cflab123', 'New password:')
+        self.wait_write('cflab123', 'Retype new password:')
         self.wait_write("commit")
         self.wait_write("exit")
 

@@ -94,10 +94,15 @@ class VEOS_vm(vrnetlab.VM):
         self.wait_write("enable", ">")
         self.wait_write("configure")
         self.wait_write("username %s secret 0 %s role network-admin" % (self.username, self.password))
+        self.wait_write("username cflab secret 0 cflab123 role network-admin")
 
         # configure mgmt interface
         self.wait_write("interface Management 1")
         self.wait_write("ip address 10.0.0.15/24")
+        self.wait_write("exit")
+        self.wait_write("management api http-commands")
+        self.wait_write("protocol unix-socket")
+        self.wait_write("no shutdown")
         self.wait_write("exit")
         self.wait_write("exit")
         self.wait_write("copy running-config startup-config")
